@@ -6,19 +6,13 @@ bcrypt = require('bcrypt'),
 SALT_WORK_FACTOR = 10;
 
 
-const Email = new Schema({
-	
-  address: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/, 'is invalid'], index: true},
-  // Change the default to true if you don't need to validate a new user's email address
-  validated: {type: Boolean, default: true}
-
-});
- 
 var UserSchema = new Schema({
 
-  username: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
+  username: {type: String, lowercase: true, required: [true, "can't be blank"], 
+                             match: [/^[a-zA-Z0-9]+$/, 'is invalid'], index: true},
  
-  email: {type: String, lowercase: true, required: [true, "can't be blank"], match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
+  email: {type: String, lowercase: true, required: [true, "can't be blank"], 
+                              match: [/\S+@\S+\.\S+/, 'is invalid'], index: true},
   password: { type: String, required: true, select:false },
   bio: String,
   image: String,
