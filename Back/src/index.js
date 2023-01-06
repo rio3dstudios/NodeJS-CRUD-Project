@@ -3,8 +3,8 @@ const http = require('http');
 const https = require('https');
 const cors = require('cors');
 
-
-const userRouter = require("./routes/UserRoute");
+const userRoute = require("./routes/UserRoute");
+const dashboardRoute = require("./routes/DashboardRoute");
 
 const bodyParser = require('body-parser')
 
@@ -17,7 +17,10 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
-app.use("/api/users", userRouter);
+app.use("/api/user", userRoute);
+
+app.use("/api/dashboard", dashboardRoute);
+
 
 //start http server
 const httpServer = http.createServer(app);
