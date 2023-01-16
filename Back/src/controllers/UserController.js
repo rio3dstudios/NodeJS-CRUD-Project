@@ -11,9 +11,12 @@ exports.createUser = async(req, res)=>{
 
     try
     {
+		console.log("receive create user");
+		
         const user = await userService.createUser(req.body);
 
         user.password = undefined;
+		console.log("user.password: "+user.password );
 
         res.json({ data: user, token: utilsClass.generateToken({id:user.id})});
     }
@@ -105,18 +108,15 @@ exports.althenticateUser= async(req, res)=>{
 
        user.password = undefined;// esconde a senha novamente
 
-     
-      
-
        // Create token
      const token = jwt.sign(
-        { id: user._id },
-        authConfig.secret,//process.env.TOKEN_KEY,
+        { id: user._id },// o primeiro parametro representa a informacão que diferencia um usuario de outro
+        authConfig.secret,//process.env.TOKEN_KEY, // o segundo parametro e um hash unico na aplicacão
         {
           expiresIn: "24h",
         }
-      );// o primeiro parametro representa a informacão que diferencia um usuario de outro
-        // o segundo parametro e um hash unico na aplicacão
+      );
+       
 
       // save user token
     //  user.token = token;
