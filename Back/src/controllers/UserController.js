@@ -11,14 +11,11 @@ exports.createUser = async(req, res)=>{
 
     try
     {
-		console.log("receive create user");
-		
         const user = await userService.createUser(req.body);
 
         user.password = undefined;
-		console.log("user.password: "+user.password );
 
-        res.json({ data: user, token: utilsClass.generateToken({id:user.id})});
+        res.json({ data: user, accessToken: utilsClass.generateToken({id:user.id})});
     }
     catch (err)
     {
@@ -82,6 +79,7 @@ exports.althenticateUser= async(req, res)=>{
 
     try
     {
+		console.log("receive user: "+req.body.email);
         const {email,password} = req.body;
 
         // Validate user input
@@ -124,7 +122,7 @@ exports.althenticateUser= async(req, res)=>{
 
       res.send({
         user,
-        token:utilsClass.generateToken({id:user.id}),
+        accessToken:utilsClass.generateToken({id:user.id}),
        });
 
 
