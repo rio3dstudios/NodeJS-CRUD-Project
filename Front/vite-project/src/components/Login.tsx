@@ -3,6 +3,9 @@ import{ChangeEvent, useState,useRef} from "react";
 import axios from "axios";
 import {useNavigate} from 'react-router-dom'; // import do hook
 
+
+const API_URL = "http://localhost:3000/api/user/auth";
+
 const initialState = {
   email: '',
   password: ''
@@ -37,7 +40,7 @@ export function Login()
        // set configurations
        const configuration = {
         method: "post",
-        url: "http://localhost:3000/api/user/auth",
+        url: API_URL,
         data: {
           email,
           password
@@ -45,13 +48,16 @@ export function Login()
       };
       // make the API call
       axios(configuration)
-      .then((result) => {
-        console.log(result);
+      .then((response) => {
+        console.log(response);
+        if (response.data.accessToken) {
+          localStorage.setItem("user", JSON.stringify(response.data));
+        }
 
         navigate('/dashboard'); //uso do hook para ir para a página /dashboard
         
       
-       // window.location.reload();
+        window.location.reload();
       
       })
       .catch((error) => {console.log(error);})

@@ -1,15 +1,37 @@
-import { Container, Row, Col } from 'react-bootstrap';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faCheck} from "@fortawesome/free-solid-svg-icons";
+import { Navigation } from './Navigation'
+import { useState, useEffect } from "react";
 
 
 
 export function Dashboard()
 {
+
+  
+  const [currentUser, setCurrentUser] = useState(undefined);
+
+  
+  useEffect(() => {
+    
+    const user =  JSON.parse(localStorage.getItem('user') || '{}');
+    
+
+    if (JSON.stringify(user)!='{}') {
+      setCurrentUser(user);
+      
+      console.log("data: "+user.user.username);
+      
+    
+    }
+  }, []);
+
+
     return(
        
       <div>
+        <Navigation/>
         <h1>Dashboard</h1>
+        {currentUser ? (<>Bem vindo {currentUser.user.username}</>):(<></>)}
+       
 
       </div>
     )

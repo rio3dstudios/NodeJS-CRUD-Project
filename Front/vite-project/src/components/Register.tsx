@@ -51,7 +51,7 @@ export function Register()
 
     return(
       <div>
-         <h2>Register</h2>
+         <h2>Sign up</h2>
         <Form onSubmit={(e)=>handleSubmit(e)}>
             {/* username */}
         <Form.Group controlId="formBasicUsername">
