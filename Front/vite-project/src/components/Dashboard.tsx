@@ -28,7 +28,7 @@ export function Dashboard()
     return(
        
       <div>
-        <Navigation/>
+        <Navigation component = "Dashboard"/>
         <h1>Dashboard</h1>
         {currentUser ? (<>Bem vindo {currentUser.user.username}</>):(<></>)}
        

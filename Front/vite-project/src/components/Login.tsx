@@ -1,104 +1,48 @@
-import { Form,Button } from 'react-bootstrap';
-import{ChangeEvent, useState,useRef} from "react";
-import axios from "axios";
-import {useNavigate} from 'react-router-dom'; // import do hook
-
-
-const API_URL = "http://localhost:3000/api/user/auth";
-
-const initialState = {
-  email: '',
-  password: ''
-}
+import { Container,Row,Col } from 'react-bootstrap';
+import { SideCard } from './SideCard'
+import { LoginForm } from './LoginForm'
+import { Navigation } from './Navigation'
 
 
 export function Login()
 {
 
   
-    // initial state
-    const [{ email, password}, setFieldState] = useState(initialState)
-
-
-
-    const handleChange = (event:ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = event.target
-        setFieldState((prevState) => ({ ...prevState, [name]: value }))
-      }
-  
-    const clearState = () => setFieldState({ ...initialState })// os tres pontinhos 
-                                                                //atualiza o valor corrente
-                                                                // para os valor4s de inicial state
-
-
-    const navigate = useNavigate();  
-
-    const handleSubmit = (e:any) => {
    
-      e.preventDefault()
-  
-       // set configurations
-       const configuration = {
-        method: "post",
-        url: API_URL,
-        data: {
-          email,
-          password
-        },
-      };
-      // make the API call
-      axios(configuration)
-      .then((response) => {
-        console.log(response);
-        if (response.data.accessToken) {
-          localStorage.setItem("user", JSON.stringify(response.data));
-        }
-
-        navigate('/dashboard'); //uso do hook para ir para a página /dashboard
-        
-      
-        window.location.reload();
-      
-      })
-      .catch((error) => {console.log(error);})
-     
-    }
     return(
       <div>
-         <h2>Login</h2>
-        <Form>
-        {/* email */}
-        <Form.Group controlId="formBasicEmail">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            name="email"
-            type="email"
-            placeholder="Enter email" 
-            value={email}
-            onChange={handleChange}
-            />
-        </Form.Group>
 
-        {/* password */}
-        <Form.Group controlId="formBasicPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control 
-           name="password"
-           type="password"
-           placeholder="Password"
-           value={password}
-           onChange={handleChange}
-            />
-        </Form.Group>
+    <Navigation component = "Login"/>
 
-        {/* submit button */}
-        <Button variant="primary"
-         type="submit"
-         onClick={(e) => handleSubmit(e)}
-         >
-          Submit
-        </Button>
-      </Form>
+          <main className="my-5 py-5">
+      <Container className="px-0">
+        <Row
+          noGutters
+          className="pt-2 pt-md-5 w-100 px-4 px-xl-0 position-relative"
+        >
+          <Col
+            xs={{ order: 2 }}
+            md={{ span: 4, order: 1 }}
+            tag="aside"
+            className="pb-5 mb-5 pb-md-0 mb-md-0 mx-auto mx-md-0"
+          >
+            
+          <SideCard banner="./img/woman.jpg"/>
+          </Col>
+
+          <Col
+            xs={{ order: 1 }}
+            md={{ span: 7, offset: 1 }}
+            tag="section"
+            className="py-5 mb-5 py-md-0 mb-md-0"
+          >
+            <LoginForm />
+          </Col>
+        </Row>
+      </Container>
+    </main>
+       
+
       </div>
        
     )

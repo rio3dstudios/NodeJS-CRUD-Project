@@ -3,9 +3,12 @@ import{Navbar,Nav,Container} from 'react-bootstrap';
 
 import { useState, useEffect } from "react";
 
+type NavProps=
+{
+  component: string
+}
 
-
-export function Navigation()
+export function Navigation(props: NavProps)
 {
     const [pageData, setPageData] = useState({});//pageData== vetor, setPageData == funcão para carregar o vetor
     useEffect(() => {
@@ -48,7 +51,7 @@ export function Navigation()
         <Navbar.Collapse id = 'responsive-navbar-nav'   className="justify-content-end" >
          <Nav defaultActiveKey="/" as="ul">
          <Nav.Item>
-           <Nav.Link href="#home" className="nav-links" >Home</Nav.Link>
+           <Nav.Link href="/home" className="nav-links" >Home</Nav.Link>
          </Nav.Item>
 
          {currentUser ? (
@@ -56,16 +59,30 @@ export function Navigation()
          <Nav.Link href="/login" className="nav-links" onClick={logOut}>Logout</Nav.Link>
        </Nav.Item>
         ) : (
-          <>
-          <Nav.Item>
-           <Nav.Link href="/login" className="nav-links" >Login</Nav.Link>
-         </Nav.Item>
+          {
+            'Login': <> <Nav.Item>
+                      <Nav.Link href="/register" className="nav-links" >Sign up</Nav.Link>
+                       </Nav.Item></>,
+            'Register': <> <Nav.Item>
+                        <Nav.Link href="/login" className="nav-links" >Login</Nav.Link>
+                        </Nav.Item></>,
+            'Dashboard': <></>,
+            'Home':      <>
+                        <Nav.Item>
+                       <Nav.Link href="/login" className="nav-links" >Login</Nav.Link>
+                       </Nav.Item>
+  
+                       <Nav.Item>
+                       <Nav.Link href="/register" className="nav-links" >Sign up</Nav.Link>
+                       </Nav.Item>
+                       </>
+          }[props.component]
 
-         <Nav.Item>
-          <Nav.Link href="/register" className="nav-links" >Sign up</Nav.Link>
-        </Nav.Item>
-        </>
+         
+      
  )}
+
+          
          
          </Nav>
         </Navbar.Collapse>
